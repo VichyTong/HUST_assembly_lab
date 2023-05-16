@@ -23,7 +23,7 @@ NUMCNT ENDS
 
 .DATA
     username db "tongweixi", 0
-    password db "U202115361", 0
+    password db "U202115361" XOR '114514', 0
 
     buf1 db 20 dup(0), 0
     buf2 db 10 dup(0), 0
@@ -90,6 +90,13 @@ F0:
     invoke scanf, offset lpFmtString, offset buf2
 
     STRCMP buf1, username, flag
+
+    ; 插入无意义代码增加难度
+    jmp trick
+    trick_data DD 114514
+    trick:
+    ; 无意义代码结束
+
     cmp flag, 0
     JNZ NOTAUTH
     STRCMP buf2, password, flag
